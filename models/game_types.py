@@ -26,13 +26,13 @@ class PlayerPower(Enum):
     SUPERPOWER = "superpower"
 
 class Ghost:
-    def __init__(self, coordinates: Position):
+    def __init__(self, id: int, coordinates: Position):
+        self.id = id
         self.coordinates: Position = coordinates
         self.status = GhostStatus.NORMAL
 
 class Player:
-    def __init__(self, name: str, coordinates: Position) -> None:
-        self.name: str = name
+    def __init__(self, coordinates: Position) -> None:
         self.coordinates: Position = coordinates
         self.status = PlayerPower.NORMAL
     
@@ -40,7 +40,7 @@ class Player:
         x, y = direction.value
         self.coordinates.x += x
         self.coordinates.y += y
-q   
+
 class GameState:
     def __init__(self, lives, timer):
         self.score: int = 0

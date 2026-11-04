@@ -1,4 +1,4 @@
-from mazegenerator import MazeGenerator
+ from mazegenerator import MazeGenerator
 
 class Level:
     def __init__(self, width, height, seed):
