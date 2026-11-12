@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from time import monotonic
 
 @dataclass
 class Position:
@@ -16,6 +17,7 @@ class Status(Enum):
     PLAYING = "playing"
     PAUSED = "paused"
     GAMEOVER = "gameover"
+    VICTORY = "victory"
 
 class GhostStatus(Enum):
     NORMAL = "normal"
@@ -25,16 +27,30 @@ class PlayerPower(Enum):
     NORMAL = "normal"
     SUPERPOWER = "superpower"
 
+class GhostName(Enum):
+    BLINKY = 1
+    PINKY = 2
+    INKY = 3
+    CLYDE = 4
+
 class Ghost:
-    def __init__(self, id: int, coordinates: Position):
-        self.id = id
+    def __init__(self, name: GhostName, coordinates: Position):
+        self.name = name
         self.coordinates: Position = coordinates
+        self.start_coordinates = coordinates
+        self.path = []
+        self.path_index = 1
+        self.last_ghost_move = monotonic()
+        self.player_previous_coordinates = None
         self.status = GhostStatus.NORMAL
 
 class Player:
     def __init__(self, coordinates: Position) -> None:
         self.coordinates: Position = coordinates
+        self.start_coordinates = Position(coordinates.x, coordinates.y)
+        self.direction = Direction.UP
         self.status = PlayerPower.NORMAL
+        self.last_move = None
     
     def move_player(self, direction: Direction):
         x, y = direction.value
@@ -42,20 +58,9 @@ class Player:
         self.coordinates.y += y
 
 class GameState:
-    def __init__(self, lives, timer):
+    def __init__(self, lives, timer) -> None:
         self.score: int = 0
         self.lives: int = lives
         self.level: int = 1
         self.timer: int = timer
         self.status: Status = Status.PLAYING
-    
-    def add_score(self, score):
-        self.score += score
-    
-    def lose_life(self):
-        if self.lives == 0:
-            return 0
-        self.lives -= 1
-        if self.lives == 0:
-            self.status = Status.GAMEOVER
-        return 1

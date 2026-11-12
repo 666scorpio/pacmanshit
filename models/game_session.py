@@ -6,10 +6,11 @@ class SessionState(Enum):
     PLAYING = 2
 
 class GameSession():
-    def __init__(self, maze, player, ghosts, pacgums, game_state):
+    def __init__(self, maze, player, ghosts, pacgums, game_state, points_per):
         self.maze = maze
         self.player = player
         self.ghosts = ghosts
         self.pacgums = pacgums
         self.game_state = game_state
-        self.session_state = SessionState(2)
+        self.points_per = points_per
+        self.state = SessionState(0)

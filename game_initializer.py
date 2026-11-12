@@ -3,6 +3,7 @@ from .models.game_types import Player
 from .models.game_types import Position
 from .models.game_types import Ghost
 from .models.game_types import GameState
+from .models.game_types import GhostName
 
 class GameInitializer():
     def __init__(self, game_configs):
@@ -41,7 +42,7 @@ class GameInitializer():
         ]
         ghosts = []
         for i, pos in enumerate(positions, 1):
-            ghosts.append(Ghost(i, Position(pos[0], pos[1])))
+            ghosts.append(Ghost(GhostName(i), Position(pos[0], pos[1])))
         return ghosts
 
     def create_pacgums(self, player):

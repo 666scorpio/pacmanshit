@@ -1,4 +1,4 @@
- from mazegenerator import MazeGenerator
+from mazegenerator import MazeGenerator
 
 class Level:
     def __init__(self, width, height, seed):
@@ -23,14 +23,17 @@ class Config:
         points_per_ghost,
         seed,
         level_max_time,
+        timer
     ):
         self.highscore_filename = highscore_filename
         self.level_array = level_array
-        self.points_per_pacgum = points_per_pacgum
-        self.points_per_super_pacgum = points_per_super_pacgum
-        self.points_per_ghost = points_per_ghost
+        self.points_per = {
+            "pacgum": points_per_pacgum,
+            "superpacgum": points_per_super_pacgum,
+            "ghost": points_per_ghost}
         self.seed = seed
         self.level_max_time = level_max_time
+        self.timer = timer
         self.levels = []
         for level in self.level_array:
             self.levels.append(Level(level["width"], level["height"], self.seed))
